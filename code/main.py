@@ -1,5 +1,4 @@
 import pandas as pd
-from matplotlib import pyplot as plt
 from MLP import MLP
 from graphics import *
 
@@ -9,7 +8,7 @@ def draw_nn(l):
     ax = fig.gca()
     ax.axis('off')
     draw_neural_net(ax, l)
-    fig.savefig('nn.png')
+    plt.savefig("./documentation/images/neural_network.jpg")
 
 
 def main():
@@ -17,14 +16,12 @@ def main():
     x = df.iloc[:9000, 3:8].to_numpy()
     y = df.iloc[:9000, 10:14].to_numpy()
     predict_x = df.iloc[9000:10000, 3:8].to_numpy()
-    h_layers = [4, 5, 8]
-    mlp = MLP(x, y, h_layers, max_epoch=1000)
-    draw_nn(mlp.layers)
+    h_layers = [4]
+    mlp = MLP(x, y, h_layers, max_epoch=50)
+    # draw_nn(mlp.layers)
 
     e = mlp.backpropagation()
     # nn.plot_errors(e)
-
-
 
 
 if __name__ == '__main__':

@@ -3,8 +3,7 @@ from matplotlib import pyplot as plt
 from active_function import *
 import numpy as np
 
-from init_weights import glorot_weights
-from softmax import softmax
+from init_weights import *
 
 
 class MLP:
@@ -14,7 +13,7 @@ class MLP:
     #   max_epoch = max number of epoch
     #   l_rate = learning rate of MLP
     #   batch_size = dimension of batch size for mini batch
-    def __init__(self, x, y, h_layers, max_epoch=1, l_rate=0.1, batch_size=32, af="Relu"):
+    def __init__(self, x, y, h_layers, max_epoch=1, l_rate=0.5, batch_size=64, af="Relu"):
         self.x = np.transpose(x)
         self.y = y
         self.layers = [len(self.x)] + h_layers + [len(self.y[0])]
@@ -23,50 +22,77 @@ class MLP:
         self.batch_size = batch_size
         self.af = af
         # generate random weights in uniform distribution
-        self.w, self.b = glorot_weights(self.layers)
+        self.w, self.b = random_weights(self.layers)
 
     # backpropagation - to train mlp
     def backpropagation(self):
+        c = []
         for i in range(self.max_epoch):
-            a = self.forward_propagation(self.x)
-            self.backward_propagation(a)
+            # add stochastic minibatch passing data
+            # batches = np.arange(0, self.x.shape[1])
+            # np.random.shuffle(batches)
+            # batches = np.split(batches, self.batch_size)
+            # for minibatch in batches:
+                # n_x, n_y = self.x.shape[0], self.y.shape[1]
+                # x, y = self.x[:, minibatch].reshape(n_x, 1), self.y[minibatch, :].reshape(1, n_y)
+            x, y = self.x, self.y
+            z = self.forward_propagation(x)
+            cost = self.cross_entropy(z[-1], np.transpose(y))
+            c.append(cost)
+            self.backward_propagation(z, y)
+            #print("cost after", i, " iterations is ", cost)
+
+        plt_cross = plt.figure(1)
+        plt.title = "Loss"
+        plt.plot(np.arange(0, self.max_epoch), c)
+        plt.xlabel("iterations")
+        plt.ylabel("cross-entropy-loss")
+        plt.show()
 
     # forward propagation
     def forward_propagation(self, x):
-        a = [x]
-        k = len(self.w) - 1
-        for j in range(1, k):
+        k = len(self.w)
+        z = [np.array(x)]
+        for i in range(1, k):
             if self.af == "Relu":
-                a.append(Relu(np.dot(self.w[j], a[j - 1]) + self.b[j]))
+                z.append(Relu(np.dot(self.w[i], z[i - 1]) + self.b[i]))
             elif self.af == "Sigmoid":
-                a.append(Sigmoid(np.dot(self.w[j], a[j - 1]) + self.b[j]))
+                z.append(Sigmoid(np.dot(self.w[i], z[i - 1]) + self.b[i]))
+            elif self.af == "Tanh":
+                z.append(Tanh(np.dot(self.w[i], z[i - 1]) + self.b[i]))
         # multiclass - softmax
-        a.append(softmax(np.dot(self.w[k], a[k - 1]) + self.b[k]))
-        return a
+        z.append(self.softmax(np.dot(self.w[k], z[k - 1]) + self.b[k]))
+        return z
 
-    # stochastic gradient descent
-    def sgd(self, a):
+    # MULTICLASS - SOFTMAX
+    def softmax(self, x):
+        e = np.exp(x/100)
+        return e / np.sum(e)
+
+    def cross_entropy(self, z, y):
+        return -(1 / (y.shape[1])) * np.sum(y * np.log(z))
+
+    # calculate the gradients
+    def grad(self, z, y):
         dw, db = {}, {}
-        j = len(self.w) - 1
-        # number of size output
-        m = 1 / self.layers[-1]
-        # delta output of j - first delta on the top
-        dz = np.transpose(self.y) - a[-1]
-        for i in range(j, 0, -1):
-            dw[i] = m * np.dot(dz, np.transpose(a[i - 1]))
-            db[i] = m * np.sum(dz)
-            # derivation active function
+        n = len(self.w)
+        m = 1 / y.shape[0]
+        dz = z[-1] - np.transpose(y)
+        for i in range(n, 0, -1):
+            dw[i] = m * np.dot(dz, np.transpose(z[i - 1]))
+            db[i] = m * np.sum(dz, axis=1, keepdims=True)
             if self.af == "Relu":
-                dz = np.dot(np.transpose(self.w[i]), dz) * Relu(a[i - 1], True)
+                dz = np.dot(np.transpose(self.w[i]), dz) * Relu(z[i - 1], True)
             elif self.af == "Sigmoid":
-                dz = np.dot(np.transpose(self.w[i]), dz) * Sigmoid(a[i - 1], True)
+                dz = np.dot(np.transpose(self.w[i]), dz) * Sigmoid(z[i - 1], True)
+            elif self.af == "Tanh":
+                dz = np.dot(np.transpose(self.w[i]), dz) * Tanh(z[i - 1], True)
         return dw, db
 
     # backward propagation
-    def backward_propagation(self, a):
-        # gradients
-        gw, gb = self.sgd(a)
-        for i in range(1, len(self.w)):
+    def backward_propagation(self, a, y):
+        gw, gb = self.grad(a, y)
+        for i in range(1, len(self.w)+1):
             self.w[i] -= self.l_rate * gw[i]
             self.b[i] -= self.l_rate * gb[i]
 
@@ -78,9 +104,6 @@ class MLP:
             else:
                 a[0, i] = 0
         return a
-
-    def mce(self, a, y):
-        return
 
     # prediction value
     def prediction(self, x):

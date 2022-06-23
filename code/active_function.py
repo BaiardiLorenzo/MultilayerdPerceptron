@@ -17,3 +17,11 @@ def Relu(x, derivation=False):
         return np.array(x >= 0).astype(int)
     else:
         return np.maximum(0, x)
+
+
+# TANH
+def Tanh(x, derivation=False):
+    if derivation:
+        return 1 - np.power(np.tanh(x), 2)
+    else:
+        return np.tanh(x)
