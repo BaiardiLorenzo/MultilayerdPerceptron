@@ -1,12 +1,20 @@
 # MultilayerdPerceptron
-Implementation of MLP in python
+Implementazione del multilayerd perceptron multiclasse per problemi di classificazione in python. Per la riproduzione dei dati è necessario far eseguire il programma. Se si ha intenzione di cambiare i parametri dei layer nascosti è sufficiente modificare la lista h_layers nel main. Per cambiare i dataset forniti dal sito: http://archive.ics.uci.edu/ml/datasets/Letter+RecognitionOpenCV-Python è sufficiente modificare la stringa di link all'interno del metodo read_csv di pandas.
 
-### - Module Main:
-The test module. In this module the mlp train trought the data set and print errors on training set and validation set.
+### Main
+Modulo di Test. In questo modulo verrà chiamato l'algoritmo backpropagation per l'addestramento della reta, attraverso due dataset. Successivamente verranno stampati i valori di error sul training e validation set.
 
-### - Module Functions:
-Module where the active functions (with relative derivation) and distribution functions are stored. 
-In particular, for the active functions, there are: Relu, Sigmoid, Lazy_Relu
+### Active Function
+Modulo nel quale sono presenti le varie funzioni di attivazioni con le relative derivate. In particolare: Relu, Sigmoid.
 
-### - Module MultilayerPerceptron:
-Class that define a Neural Network(NN) - MLP with the initialization of all weights, bais and backpropagation algorithm.
+### MLP
+Classe che definisce la rete neurale MLP. E' presente l'algoritmo di backpropagation con relativo calcolo del gradiente.
+
+### Softmax
+Modulo contenente la funzione di softmax per la multiclasse.
+
+### Init-Weight
+Modulo per l'inizializzazione dei pesi della MLP. E' presente l'inizializzazione Uniforme di Glorot e randomica.
+
+### Graphics
+Modulo dedicato alla stampa e alla visualizzazione della rete.
