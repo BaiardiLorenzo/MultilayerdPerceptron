@@ -21,7 +21,6 @@ def main():
     # draw_nn(mlp.layers)
 
     e = mlp.backpropagation()
-    # nn.plot_errors(e)
 
 
 if __name__ == '__main__':
