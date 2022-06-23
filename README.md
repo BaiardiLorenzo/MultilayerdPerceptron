@@ -8,7 +8,7 @@ Modulo di Test. In questo modulo verrà chiamato l'algoritmo backpropagation per
 Modulo nel quale sono presenti le varie funzioni di attivazioni con le relative derivate. Relu, Sigmoid, Tanh. E' presente anche la funzione di Softmax per il caso multiclasse.
 
 ### MLP
-Classe che definisce la rete neurale MLP e il suo l'algoritmo di backpropagation.
+Classe che definisce la rete neurale MLP e il suo algoritmo di backpropagation.
 
 ### Init-Parameters
 Modulo per l'inizializzazione dei parametri della rete. L'inizializzazione dei parametri può avvenire con Glorot (Distribuzione Uniforme) o con valori randomici.
