@@ -1,8 +1,41 @@
+import numpy as np
 from matplotlib import pyplot as plt
+
+
+def PlotLoss(loss, i):
+    plt_loss = plt.figure(i)
+    plt.title("Error training: Dataset: "+str(i))
+    plt.plot(np.arange(0, len(loss)), loss, color="firebrick")
+    plt.xlabel("Epoch")
+    plt.ylabel("Multiclass_Cross_Entropy")
+    a = plt_loss.gca()
+    a.axis('on')
+    plt.savefig("./documentation/images/loss"+str(i)+".jpg")
+
+
+def PlotValidation(val, i):
+    plt_val = plt.figure(i)
+    plt.title("Validation: Dataset: "+str(i))
+    plt.plot(np.arange(0, len(val)), val, color="midnightblue")
+    plt.xlabel("Examples")
+    plt.ylabel("Multiclass_Cross_Entropy")
+    a = plt_val.gca()
+    a.axis('on')
+    plt.savefig("./documentation/images/validation"+str(i)+".jpg")
 
 
 # REFERENCES - https://gist.github.com/craffel/2d727968c3aaebd10359
 # Draw a neural network in plot
+def PlotNetwork(l, i):
+    plt.style.use('default')
+    plt_net = plt.figure(i)
+    plt.title("Network: "+str(i))
+    ax = plt_net.gca()
+    ax.axis('off')
+    draw_neural_net(ax, l)
+    plt_net.savefig("./documentation/images/neural_network"+str(i)+".jpg")
+
+
 def draw_neural_net(ax, layer_sizes, left=.1, right=.9, bottom=.1, top=.9):
     n_layers = len(layer_sizes)
     v_spacing = (top - bottom) / float(max(layer_sizes))
