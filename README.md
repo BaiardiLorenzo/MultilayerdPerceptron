@@ -1,20 +1,17 @@
 # MultilayerdPerceptron
-Implementazione del multilayerd perceptron multiclasse per problemi di classificazione in python. Per la riproduzione dei dati è necessario far eseguire il programma. Se si ha intenzione di cambiare i parametri dei layer nascosti è sufficiente modificare la lista h_layers nel main. Per cambiare i dataset forniti dal sito: http://archive.ics.uci.edu/ml/datasets/Letter+RecognitionOpenCV-Python è sufficiente modificare la stringa di link all'interno del metodo read_csv di pandas.
+Implementazione del multilayerd perceptron multiclasse per problemi di classificazione. Per la riproduzione dei dati è necessario eseguire il programma dopo aver impostato correttamente le stringhe relative ai percorsi del dataset e, se si volesse cambiare i dataset, sarà sufficiente modificare le stringhe dei link all'interno dei metodo read_csv di pandas. I dataset dell'elabaroto sono stati presi dall'archivio: http://archive.ics.uci.edu/ml/datasets/Letter+RecognitionOpenCV-Python.
 
 ### Main
-Modulo di Test. In questo modulo verrà chiamato l'algoritmo backpropagation per l'addestramento della reta, attraverso due dataset. Successivamente verranno stampati i valori di error sul training e validation set.
+Modulo di Test. In questo modulo verrà chiamato l'algoritmo backpropagation per l'addestramento delle reti, attraverso due dataset. Successivamente verranno stampati i valori di error sul training e validation set.
 
 ### Active Function
-Modulo nel quale sono presenti le varie funzioni di attivazioni con le relative derivate. In particolare: Relu, Sigmoid.
+Modulo nel quale sono presenti le varie funzioni di attivazioni con le relative derivate. Relu, Sigmoid, Tanh. E' presente anche la funzione di Softmax per il caso multiclasse.
 
 ### MLP
-Classe che definisce la rete neurale MLP. E' presente l'algoritmo di backpropagation con relativo calcolo del gradiente.
+Classe che definisce la rete neurale MLP e il suo algoritmo di backpropagation.
 
-### Softmax
-Modulo contenente la funzione di softmax per la multiclasse.
-
-### Init-Weight
-Modulo per l'inizializzazione dei pesi della MLP. E' presente l'inizializzazione Uniforme di Glorot e randomica.
+### Init-Parameters
+Modulo per l'inizializzazione dei parametri della rete. L'inizializzazione dei parametri può avvenire con Glorot (Distribuzione Uniforme) o con valori randomici.
 
 ### Graphics
-Modulo dedicato alla stampa e alla visualizzazione della rete.
+Modulo dedicato alla stampa dei vari grafici.
