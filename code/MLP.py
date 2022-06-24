@@ -48,9 +48,9 @@ class MLP:
             for minibatch in batches:
                 x, y = self.get_mini_batches(minibatch)
                 z = self.forward(x)
-                loss[epoch].append(self.multiclass_cross_entropy(z[-1], y))
+                loss[epoch].append(self.multiclass_cross_entropy(z[-1], y, self.batch_size))
                 self.backward(z, y)
-            val.append(self.prediction(val_xx, val_yy))
+            val.append(self.prediction(val_xx, val_yy, n_val))
         loss = [np.mean(loss[i]) for i in range(self.max_epoch)]
         return loss, val
 
@@ -90,9 +90,9 @@ class MLP:
                 dz = np.dot(np.transpose(self.w[i]), dz) * Tanh(z[i - 1], True)
         return dw, db
 
-    def multiclass_cross_entropy(self, z, y):
-        return -(1 / self.batch_size) * np.sum(y * np.log(z))
+    def multiclass_cross_entropy(self, z, y, n_obs):
+        return -(1 / n_obs) * np.sum(y * np.log(z))
 
-    def prediction(self, x, y):
-        return self.multiclass_cross_entropy(self.forward(x)[-1], y)
+    def prediction(self, x, y, n_obs):
+        return self.multiclass_cross_entropy(self.forward(x)[-1], y, n_obs)
 

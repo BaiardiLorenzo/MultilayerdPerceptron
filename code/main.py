@@ -40,16 +40,14 @@ def main():
     h_layers = [4]
     nn1 = MLP(train_x, train_y, h_layers, max_epoch=50)
     loss, val = nn1.backpropagation(val_x, val_y)
-    PlotLoss(loss, 1)
-    PlotValidation(val, 1)
+    PlotTrainingValidation(loss, val, 1)
 
     # --- FrogDataset
     train_x, train_y, val_x, val_y = FrogDataset()
     h_layers = [4, 3]
     nn2 = MLP(train_x, train_y, h_layers, max_epoch=50)
     loss, val = nn2.backpropagation(val_x, val_y)
-    PlotLoss(loss, 2)
-    PlotValidation(val, 2)
+    PlotTrainingValidation(loss, val, 2)
 
 
 if __name__ == '__main__':

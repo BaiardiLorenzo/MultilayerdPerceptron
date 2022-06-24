@@ -2,11 +2,11 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-def PlotLoss(loss, i):
+def PlotTraining(loss, i):
     plt_loss = plt.figure(10+i)
     plt.title("Error training: Dataset: "+str(i))
     plt.plot(np.arange(0, len(loss)), loss, color="firebrick")
-    plt.xlabel("Epoch")
+    plt.xlabel("Epochs")
     plt.ylabel("Multiclass_Cross_Entropy")
     plt.savefig("./documentation/images/loss"+str(i)+".jpg")
 
@@ -15,9 +15,20 @@ def PlotValidation(val, i):
     plt_val = plt.figure(20+i)
     plt.title("Validation: Dataset: "+str(i))
     plt.plot(np.arange(0, len(val)), val, color="midnightblue")
-    plt.xlabel("Epoch")
+    plt.xlabel("Epochs")
     plt.ylabel("Multiclass_Cross_Entropy")
     plt.savefig("./documentation/images/validation"+str(i)+".jpg")
+
+
+def PlotTrainingValidation(loss, val, i):
+    plt_val = plt.figure(30+i)
+    plt.title("Training and Validation " + str(i))
+    plt.plot(np.arange(0, len(loss)), loss, color="firebrick")
+    plt.plot(np.arange(0, len(val)), val, color="midnightblue")
+    plt.legend(["Training", "Validation"])
+    plt.xlabel("Epochs")
+    plt.ylabel("Multiclass Cross Entropy")
+    plt.savefig("./documentation/images/lossval" + str(i) + ".jpg")
 
 
 # REFERENCES - https://gist.github.com/craffel/2d727968c3aaebd10359

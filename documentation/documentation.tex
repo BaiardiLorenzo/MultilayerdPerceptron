@@ -122,55 +122,35 @@
         Nelle successive iterazioni, la rete sarà in grado di apprendere molto di più migliorando quindi la precisione nella classificazione.
         Più sono i dati e il numero di epoche, più la rete sarà accurata nella classificazione.
     \section{Risultati}\label{sec:risultati}
-        \begin{itemize}
-            \item Dataset 1: Fallimento delle macchine. \\
+        \subsection{Dataset 1 - Fallimento delle macchine.}\label{subsec:dataset-1}
             Sono stati presi 9000 osservazioni per 50 epoche per l'apprendimento della rete, con un learning rate pari a 0.0001.
-            \begin{itemize}
-                \item Apprendimento:
-                \begin{figure}[H]
-                    \centering
-                    \includegraphics[scale=0.50]{loss1}
-                    \caption{Multiclass Cross Entropy sull'errore di training}
-                    \label{fig:figure2}
-                \end{figure}
-                Il valore di predizione inizialmente si rivela già notevolmente basso già dalle prime iterazioni, fino ad a convergere.\\
-                \item Predizioni: \\
-                Le restanti osservazioni, circa 1000, sono state utilizzate per il validation set.
-                \begin{figure}[H]
-                    \centering
-                    \includegraphics[scale=0.50]{validation1}
-                    \caption{Validation set sulle osservazioni}
-                    \label{fig:figure3}
-                \end{figure}
-            \end{itemize}
-            \newpage
-            \item Dataset 2: Classificazione delle rane. \\
+            Validation set: Le restanti osservazioni, circa 1000, sono state utilizzate per il validation set:
+            \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.50]{lossval1}
+                \caption{Cross Entropy sul training set e validation set}
+                \label{fig:figure3}
+            \end{figure}
+            Il valore di predizione inizialmente si rivela già notevolmente basso già dalle prime iterazioni per poi arrivare alla conversione.
+            Sia che per il training set che per il validation set possiamo che notare che entrambi i grafici tendono a diminuire.
+            Questo ci mostra che la rete apprende bene e non va in over-fitting.
+        \subsection{Dataset 2 - Classificazione delle rane}\label{subsec:dataset-2---classificazione-delle-rane}
             Sono stati presi 6000 osservazioni per 50 epoche per l'apprendimento della rete, con learning rate pari a 0.0001.
-            \begin{itemize}
-                \item Apprendimento:\\
-                \begin{figure}[H]
-                    \centering
-                    \includegraphics[scale=0.50]{loss2}
-                    \caption{Multiclass Cross Entropy sull'errore di training}
-                    \label{fig:figure4}
-                \end{figure}
-                Come è possibile vedere, in questo caso, il valore iniziale di loss è molto alto fino a convergere ad un valore più basso.
-                \item Predizione: \\
-                Le restanti osservazioni, circa 1000, sono state utilizzate per il validation set.
-                \begin{figure}[H]
-                    \centering
-                    \includegraphics[scale=0.50]{validation2}
-                    \caption{Validation set sulle osservazioni}
-                    \label{fig:figure5}
-                \end{figure}
-
-            \end{itemize}
-        \end{itemize}
-    \newpage
+            Validation: Le restanti osservazioni, circa 1000, sono state utilizzate per il validation set:
+            \begin{figure}[H]
+                \centering
+                \includegraphics[scale=0.50]{lossval2}
+                \caption{Cross Entropy sul training set e validation set}
+                \label{fig:figure4}
+            \end{figure}
+            \newpage
+            Come è possibile vedere, in questo caso, il valore iniziale di loss è più alto rispetto al primo dateset dato che il numero di classi è più alto e il numero di osservazione è minore.
+            Nonostante tutto, la rete converge fino al valore più basso.
+            Anche in questo caso, il training set e il validation set tendono a diminuire, non andando in over-fitting.
     \section{Conclusioni}\label{sec:conclusioni}
-        Come abbiamo potuto osservare dai grafici, la rete una volta che apprende dai dati riesce a sbagliare sempre meno fino ad arrivare al punto di convergenza.
-        Nel dataset due l'errore inizialmente è più alto del dataset uno, ma con il passare delle iterazioni anche queste tende alla convergenza come è da previsione.
-        Questo è probabilmente dovuto dal numero di epoche o dalla numero di osservazioni del secondo dataset.
+        Come abbiamo potuto osservare dai grafici, la rete una volta che apprende dai dati riesce ad apprendere sempre di più fino ad arrivare alla convergenza.
+        Per entrambi i dataset sia il training set e il validation set diminuiscono, non andando in over-fitting, mostrandoci che il modello architetturale descritto è un buon modello.
+        Per diminuire l'errore nel dataset 2 sarà necessario fornire un maggior numero di osservazioni per far apprendere meglio la rete data il grande numero di classi da identificare.
     \section{Caratteristiche Terminale}\label{sec:caratteristiche-terminale}
         Il terminale su cui sono state svolte le prove:
         \begin{itemize}
