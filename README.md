@@ -1,6 +1,8 @@
 # MultilayerdPerceptron
 Implementazione del multilayerd perceptron multiclasse per problemi di classificazione. Per la riproduzione dei dati è necessario eseguire il programma dopo aver impostato correttamente le stringhe relative ai percorsi del dataset e, se si volesse cambiare i dataset, sarà sufficiente modificare le stringhe dei link all'interno dei metodo read_csv di pandas. I dataset dell'elabaroto sono stati presi dall'archivio: http://archive.ics.uci.edu/ml/datasets/Letter+RecognitionOpenCV-Python.
 
+## Code
+
 ### Main
 Modulo di Test. In questo modulo verrà chiamato l'algoritmo backpropagation per l'addestramento delle reti, attraverso due dataset. Successivamente verranno stampati i valori di error sul training e validation set.
 
