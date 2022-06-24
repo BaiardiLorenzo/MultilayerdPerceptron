@@ -22,7 +22,7 @@ def FrogDataset():
     # Download dataset from url: https://archive.ics.uci.edu/ml/datasets/Anuran+Calls+%28MFCCs%29
     # write the file directory on the methods pd.read_csv
     # Find the correct family for this frog with this features
-    df = pd.read_csv("./es_dataset/Frogs_MFCCs.csv")
+    df = pd.read_csv("./dataset/Frogs_MFCCs.csv")
     x, y = df.iloc[:, :21].to_numpy(), LabelBinarizer().fit_transform(df.iloc[:, 24].to_numpy())
     index = np.arange(0, len(x))
     np.random.shuffle(index)
