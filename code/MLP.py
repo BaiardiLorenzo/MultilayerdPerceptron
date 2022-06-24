@@ -1,3 +1,5 @@
+import numpy as np
+
 from active_function import *
 from graphics import *
 from init_parameters import *
@@ -34,8 +36,11 @@ class MLP:
         np.random.shuffle(batches)
         return batches
 
-    def backpropagation(self):
+    def backpropagation(self, val_x, val_y):
         loss = {}
+        val = []
+        n_val = len(val_x)
+        val_xx, val_yy = np.transpose(val_x), np.transpose(val_y)
         for epoch in range(self.max_epoch):
             loss[epoch] = []
             # Stochastic Gradient Descent minibatch
@@ -45,8 +50,9 @@ class MLP:
                 z = self.forward(x)
                 loss[epoch].append(self.multiclass_cross_entropy(z[-1], y))
                 self.backward(z, y)
+            val.append(self.prediction(val_xx, val_yy))
         loss = [np.mean(loss[i]) for i in range(self.max_epoch)]
-        return loss
+        return loss, val
 
     def forward(self, x):
         k = len(self.w)
@@ -88,12 +94,5 @@ class MLP:
         return -(1 / self.batch_size) * np.sum(y * np.log(z))
 
     def prediction(self, x, y):
-        n = len(x)
-        x = np.transpose(x)
-        y = np.transpose(y)
-        z = []
-        for i in range(n):
-            xx = x[:, i]
-            yy = y[:, i].reshape(y.shape[0], 1)
-            z.append(self.multiclass_cross_entropy(self.forward(xx), yy))
-        return z
+        return self.multiclass_cross_entropy(self.forward(x)[-1], y)
+
